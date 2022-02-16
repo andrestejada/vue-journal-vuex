@@ -10,7 +10,12 @@ export default {
     {
       path:':id',
       name:'entry',
-      component:()=> import('../views/EntryView.vue')
+      component:()=> import('../views/EntryView.vue'),
+      props:(route)=>{
+        return{
+          id:route.params.id
+        }
+      }
     },
   ]
 }

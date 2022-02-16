@@ -1,22 +1,46 @@
 <template>
-  <div class="entry-container mb-3 point p-2" @click="$router.push({name:'entry',params:{id:10}})" >
+  <div class="entry-container mb-3 point p-2" @click="$router.push({name:'entry',params:{id:entry.id}})" >
     <div class="entry-title d-flex">
-      <span class="text-success fs-5 fw-bold">15</span>
-      <span class="mx-1 fs-5">June</span>
-      <span class="mx-1 fw-light">2022,Thuesday</span>
+      <span class="text-success fs-5 fw-bold">{{day}}</span>
+      <span class="mx-1 fs-5">{{month}}</span>
+      <span class="mx-1 fw-light">{{yearDay}}</span>
     </div>
 
-    <div class="entry-description">
-      In publishing and graphic design, Lorem ipsum is a placeholder text
-      commonly used to demonstrate the visual form of a document or a typeface
-      without relying on meaningful content. Lorem ipsum may be used as a
-      placeholder before the final copy is
-    </div>
+    <div class="entry-description">{{shortText}}</div>
   </div>
 </template>
 
 <script>
-export default {};
+const months = ['January', 'February', 'March', 'April', 'May', 'June','July', 'August', 'September', 'October', 'November', 'December']
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+export default {
+  name:'Entry',
+  props:{
+    entry:{
+      type:Object,
+      requiered:true
+    }
+  },
+  computed:{
+    shortText(){
+      return this.entry.text.length > 130
+            ? this.entry.text.substring(0,130) + '...'
+            : this.entry.text
+    },
+    day(){
+      const date = new Date(this.entry.date)
+      return date.getDate()
+    },
+    month(){
+      const date = new Date(this.entry.date)
+      return months[date.getMonth]
+    },
+    yearDay(){
+      const date = new Date(this.entry.date)
+      return `${date.getFullYear()},${days[date.getDay()]} `
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
